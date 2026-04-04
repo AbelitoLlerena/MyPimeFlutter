@@ -1,11 +1,11 @@
 // app_router
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mypime/core/routes/router_notifier.dart';
-import 'package:mypime/domain/enums/user_role_enum.dart';
-import '../../presentation/features/auth/widgets/login_page.dart';
-import '../../presentation/features/home_page.dart';
-import '../di/injector.dart';
+import 'package:mypime/features/auth/presentation/pages/login_page.dart';
+import 'package:mypime/features/auth/presentation/providers/auth_state.dart';
+import 'package:mypime/features/home_page.dart';
+import 'package:mypime/shared/providers/router_notifier.dart';
+import 'package:mypime/features/users/domain/enums/user_role_enum.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -15,7 +15,7 @@ class AppRouter {
       refreshListenable: GoRouterNotifier(ref),
 
       redirect: (context, state) {
-        final authState = ref.read(authNotifierProvider);
+        final authState = ref.read(authStateNotifierProvider);
         final loggedIn = authState.value != null;
         final role = authState.value?.user.role;  
 
