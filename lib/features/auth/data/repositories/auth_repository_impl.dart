@@ -1,6 +1,5 @@
 import 'package:mypime/core/auth/token_storage.dart';
 import 'package:mypime/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:mypime/features/auth/domain/entities/auth_entity.dart';
 import 'package:mypime/features/auth/domain/repositories/auth_repository.dart';
 import 'package:mypime/features/users/domain/entities/user_entity.dart';
 

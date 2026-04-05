@@ -16,7 +16,7 @@ class AppRouter {
 
       redirect: (context, state) {
         final loggedIn = notifier.isLoggedIn;
-        final isAdmin = notifier.isAdmin;  
+        final isAdmin = notifier.isAdmin;
 
         final location = state.uri.path;
 
