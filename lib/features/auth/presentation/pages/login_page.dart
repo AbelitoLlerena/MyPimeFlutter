@@ -19,8 +19,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   void initState() {
     super.initState();
-
-    // ✅ inicializas el notifier una sola vez
     authStateNotifier = ref.read(authStateNotifierProvider.notifier);
   }
 
@@ -42,8 +40,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authStateNotifierProvider);
-
-    // ✅ loading desde AsyncValue
     final loading = authState.isLoading;
 
     return Scaffold(
