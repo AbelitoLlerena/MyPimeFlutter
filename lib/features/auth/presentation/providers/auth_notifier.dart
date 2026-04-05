@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:mypime/features/auth/domain/usecases/login_usecase.dart';
 import 'package:mypime/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:mypime/core/auth/token_storage.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:mypime/features/auth/presentation/providers/auth_provider.dart';
 import 'package:mypime/features/users/domain/entities/user_entity.dart';
 import 'package:mypime/features/users/domain/enums/user_role_enum.dart';

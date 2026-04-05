@@ -8,7 +8,6 @@ import 'package:mypime/features/auth/presentation/providers/auth_notifier.dart';
 import 'package:mypime/features/users/domain/entities/user_entity.dart';
 import 'package:mypime/shared/providers/api_client.dart';
 import 'package:mypime/shared/providers/token_storage.dart';
-import 'package:flutter_riverpod/legacy.dart';
 
 final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
   return AuthRemoteDataSource(ref.watch(apiClientProvider));
