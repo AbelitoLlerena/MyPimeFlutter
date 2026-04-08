@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'core/routes/app_router.dart';
+import 'package:mypime/core/init/app_botstrap.dart';
+import 'package:mypime/core/routes/app_router.dart';
+import 'package:mypime/shared/providers/connectivy.dart';
+import 'package:mypime/shared/providers/sync_providers.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MainApp()));
+
+  final isar = await AppBootstrap.initIsar();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        isarProvider.overrideWithValue(isar),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends ConsumerWidget {
@@ -12,8 +25,8 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 👇 Pasamos ref al router
-    final router = AppRouter.createRouter(ref);
+    // ref.watch(connectivityServiceProvider);
+    final router = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
       routerConfig: router,

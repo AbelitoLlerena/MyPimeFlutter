@@ -6,54 +6,52 @@ import 'package:mypime/features/home_page.dart';
 import 'package:mypime/shared/providers/router_notifier.dart';
 import 'app_routes.dart';
 
-class AppRouter {
-  static GoRouter createRouter(WidgetRef ref) {
-    final notifier = ref.watch(goRouterNotifierProvider);
-    
-    return GoRouter(
-      initialLocation: AppRoutes.login,
-      refreshListenable: notifier,
+final appRouterProvider = Provider<GoRouter>((ref) {
+  final notifier = ref.watch(goRouterNotifierProvider);
 
-      redirect: (context, state) {
-        final loggedIn = notifier.isLoggedIn;
-        final isAdmin = notifier.isAdmin;
+  return GoRouter(
+    initialLocation: AppRoutes.login,
+    refreshListenable: notifier,
 
-        final location = state.uri.path;
+    redirect: (context, state) {
+      final loggedIn = notifier.isLoggedIn;
+      final isAdmin = notifier.isAdmin;
 
-        if (!loggedIn && location != AppRoutes.login) {
-          return AppRoutes.login;
-        }
+      final location = state.uri.path;
 
-        if (loggedIn && location == AppRoutes.login) {
-          return AppRoutes.home;
-        }
+      if (!loggedIn && location != AppRoutes.login) {
+        return AppRoutes.login;
+      }
 
-        if (isAdmin && [
+      if (loggedIn && location == AppRoutes.login) {
+        return AppRoutes.home;
+      }
 
-        ].contains(location)) {
-          return AppRoutes.home;
-        }
+      if (isAdmin && [
 
-        return null;
-      },
+      ].contains(location)) {
+        return AppRoutes.home;
+      }
 
-      routes: [
-        GoRoute(
-          path: AppRoutes.login,
-          builder: (_, _) => const LoginPage(),
-        ),
-        GoRoute(
-          path: AppRoutes.home,
-          builder: (_, _) => const HomePage(),
-        ),
-        // GoRoute(
-        //   path: '/user/:id',
-        //   builder: (context, state) {
-        //     final id = state.pathParameters['id'];
-        //     return UserPage(id: id!);
-        //   },
-        // );
-      ],
-    );
-  }
-}
+      return null;
+    },
+
+    routes: [
+      GoRoute(
+        path: AppRoutes.login,
+        builder: (_, _) => const LoginPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.home,
+        builder: (_, _) => const HomePage(),
+      ),
+      // GoRoute(
+      //   path: '/user/:id',
+      //   builder: (context, state) {
+      //     final id = state.pathParameters['id'];
+      //     return UserPage(id: id!);
+      //   },
+      // );
+    ],
+  );
+});
