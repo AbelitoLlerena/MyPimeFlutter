@@ -1,19 +1,34 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mypime/core/auth/token_storage.dart';
+import 'package:mypime/features/auth/domain/repositories/auth_repository.dart';
 import 'package:mypime/features/auth/domain/usecases/login_usecase.dart';
 import 'package:mypime/features/auth/domain/usecases/signup_usecase.dart';
-import 'package:mypime/core/auth/token_storage.dart';
 import 'package:mypime/features/users/domain/entities/user_entity.dart';
 
 class AuthNotifier extends StateNotifier<AsyncValue<UserEntity?>> {
   final LoginUseCase loginUseCase;
   final SignUpUseCase signUpUseCase;
   final TokenStorage tokenStorage;
+  final AuthRepository authRepository;
 
   AuthNotifier({
     required this.loginUseCase,
     required this.signUpUseCase,
     required this.tokenStorage,
-  }) : super(const AsyncValue.data(null));
+    required this.authRepository,
+  }) : super(const AsyncValue.loading()) {
+    Future.microtask(_restore);
+  }
+
+  Future<void> _restore() async {
+    try {
+      final user = await authRepository.getCurrentUser();
+      state = AsyncValue.data(user);
+    } catch (_) {
+      await tokenStorage.clear();
+      state = const AsyncValue.data(null);
+    }
+  }
 
   // 🔐 LOGIN
   Future<void> login({

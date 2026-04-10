@@ -11,6 +11,9 @@ class UserIsarModel {
   late String name;
   late String role;
 
+  /// SHA-256 en hex. Vacío = usuario creado por sincronización sin login local.
+  late String passwordHash;
+
   UserEntity toEntity() {
     return UserEntity(
       id: id,
@@ -23,6 +26,7 @@ class UserIsarModel {
     return UserIsarModel()
       ..id = entity.id
       ..name = entity.name
-      ..role = entity.role == UserRole.admin ? 'ADMIN' : 'SELLER';
+      ..role = entity.role == UserRole.admin ? 'ADMIN' : 'SELLER'
+      ..passwordHash = '';
   }
 }

@@ -27,8 +27,13 @@ const UserIsarModelSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'role': PropertySchema(
+    r'passwordHash': PropertySchema(
       id: 2,
+      name: r'passwordHash',
+      type: IsarType.string,
+    ),
+    r'role': PropertySchema(
+      id: 3,
       name: r'role',
       type: IsarType.string,
     )
@@ -55,6 +60,7 @@ int _userIsarModelEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.passwordHash.length * 3;
   bytesCount += 3 + object.role.length * 3;
   return bytesCount;
 }
@@ -67,7 +73,8 @@ void _userIsarModelSerialize(
 ) {
   writer.writeString(offsets[0], object.id);
   writer.writeString(offsets[1], object.name);
-  writer.writeString(offsets[2], object.role);
+  writer.writeString(offsets[2], object.passwordHash);
+  writer.writeString(offsets[3], object.role);
 }
 
 UserIsarModel _userIsarModelDeserialize(
@@ -79,7 +86,8 @@ UserIsarModel _userIsarModelDeserialize(
   final object = UserIsarModel();
   object.id = reader.readString(offsets[0]);
   object.name = reader.readString(offsets[1]);
-  object.role = reader.readString(offsets[2]);
+  object.passwordHash = reader.readString(offsets[2]);
+  object.role = reader.readString(offsets[3]);
   return object;
 }
 
@@ -95,6 +103,8 @@ P _userIsarModelDeserializeProp<P>(
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -519,6 +529,142 @@ extension UserIsarModelQueryFilter
     });
   }
 
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'passwordHash',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'passwordHash',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'passwordHash',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'passwordHash',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'passwordHash',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'passwordHash',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'passwordHash',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'passwordHash',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'passwordHash',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition>
+      passwordHashIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'passwordHash',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<UserIsarModel, UserIsarModel, QAfterFilterCondition> roleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -687,6 +833,20 @@ extension UserIsarModelQuerySortBy
     });
   }
 
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterSortBy>
+      sortByPasswordHash() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordHash', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterSortBy>
+      sortByPasswordHashDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordHash', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserIsarModel, UserIsarModel, QAfterSortBy> sortByRole() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'role', Sort.asc);
@@ -738,6 +898,20 @@ extension UserIsarModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterSortBy>
+      thenByPasswordHash() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordHash', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserIsarModel, UserIsarModel, QAfterSortBy>
+      thenByPasswordHashDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordHash', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserIsarModel, UserIsarModel, QAfterSortBy> thenByRole() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'role', Sort.asc);
@@ -767,6 +941,13 @@ extension UserIsarModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<UserIsarModel, UserIsarModel, QDistinct> distinctByPasswordHash(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'passwordHash', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<UserIsarModel, UserIsarModel, QDistinct> distinctByRole(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -792,6 +973,12 @@ extension UserIsarModelQueryProperty
   QueryBuilder<UserIsarModel, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<UserIsarModel, String, QQueryOperations> passwordHashProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'passwordHash');
     });
   }
 

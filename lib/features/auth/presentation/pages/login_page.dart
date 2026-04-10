@@ -63,6 +63,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Usuario local: admin / contraseña: admin',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade700,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
 
                   const SizedBox(height: 20),
 
